@@ -1,11 +1,15 @@
 "use client"
 
-import Typography from '@mui/material/Typography';
+import FeaturedProduct from './components/sections/FeaturedProduct';
+import { Stack } from '@mui/material';
 
 export default function Home() {
   return (
-    <Typography>
-      
-    </Typography>
+    <>
+    <Stack>
+    <FeaturedProduct/>
+
+    </Stack>
+    </>
   );
 }
