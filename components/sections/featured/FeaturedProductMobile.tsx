@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, styled } from "@mui/material";
+import { Box, Typography, Button, styled, TextField } from "@mui/material";
 import axios from "axios";
 
 type SizeKey = "SM" | "MD" | "LG" | "XL";
@@ -63,6 +63,7 @@ export const FeaturedProductMobile: React.FC = () => {
   const [productPrice, setProductPrice] = useState<number | null>(null);
   const [productName, setProductName] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<SizeKey | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
@@ -94,6 +95,7 @@ export const FeaturedProductMobile: React.FC = () => {
       const { data } = await axios.post("/api/square-checkout", {
         itemId: sizeVariations[selectedSize],
         size: selectedSize,
+        quantity,
       });
 
       if (data.checkoutUrl) {
@@ -106,6 +108,8 @@ export const FeaturedProductMobile: React.FC = () => {
       alert("An error occurred while processing your request.");
     }
   };
+
+  const adjustedPrice = productPrice ? (productPrice * quantity) / 100 : 0;
 
   return (
     <Box
@@ -175,14 +179,54 @@ export const FeaturedProductMobile: React.FC = () => {
       >
         {productName || "Loading Product..."}
       </Typography>
-      <Typography
-        gutterBottom
+      <Box
         sx={{
-          fontSize: "1.2rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 1,
+          marginTop: "20px",
         }}
       >
-        {productPrice ? `$${(productPrice / 100).toFixed(2)}` : "Loading..."}
-      </Typography>
+        <Typography
+          sx={{
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+        >
+          Quantity
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "1.5rem",
+              fontWeight: "bold",
+            }}
+          >
+            ${adjustedPrice.toFixed(2)}
+          </Typography>
+
+          <TextField
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+            inputProps={{ min: 1, style: { textAlign: "center", fontSize: "1.2rem" } }}
+            sx={{
+              width: "80px",
+              ".MuiInputBase-input": {
+                textAlign: "center",
+                fontSize: "1.2rem",
+              },
+            }}
+          />
+        </Box>
+      </Box>
 
       <Box sx={{ display: "flex", gap: "10px", marginY: "20px" }}>
         {Object.keys(sizeVariations).map((size) => (

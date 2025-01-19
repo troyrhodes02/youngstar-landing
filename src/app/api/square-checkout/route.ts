@@ -9,7 +9,7 @@ const client = new Client({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { itemId, size } = body;
+    const { itemId, size, quantity } = body;
 
     const catalogResponse = await client.catalogApi.retrieveCatalogObject(
       itemId,
@@ -52,7 +52,7 @@ export async function POST(request: Request) {
         lineItems: [
           {
             name: fullItemName,
-            quantity: "1",
+            quantity: quantity.toString(), // Use quantity here
             basePriceMoney: {
               amount: BigInt(itemPrice),
               currency: "USD",
