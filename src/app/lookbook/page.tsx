@@ -28,7 +28,7 @@ export default function Lookbook() {
             minHeight: "100vh",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: 'center',
             backgroundColor: "#f0f0f0",
           }}
         >
