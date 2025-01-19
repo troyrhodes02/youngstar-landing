@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, styled, TextField } from "@mui/material";
+import { Box, Typography, Button, styled, TextField, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "axios";
 
 type SizeKey = "SM" | "MD" | "LG" | "XL";
@@ -111,6 +113,9 @@ export const FeaturedProductMobile: React.FC = () => {
 
   const adjustedPrice = productPrice ? (productPrice * quantity) / 100 : 0;
 
+  const incrementQuantity = () => setQuantity(quantity + 1);
+  const decrementQuantity = () => setQuantity(Math.max(1, quantity - 1));
+
   return (
     <Box
       sx={{
@@ -207,24 +212,25 @@ export const FeaturedProductMobile: React.FC = () => {
             sx={{
               fontSize: "1.5rem",
               fontWeight: "bold",
+              marginRight: "10px",
             }}
           >
             ${adjustedPrice.toFixed(2)}
           </Typography>
-
-          <TextField
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-            inputProps={{ min: 1, style: { textAlign: "center", fontSize: "1.2rem" } }}
+          <IconButton onClick={decrementQuantity}>
+            <RemoveIcon />
+          </IconButton>
+          <Typography
             sx={{
-              width: "80px",
-              ".MuiInputBase-input": {
-                textAlign: "center",
-                fontSize: "1.2rem",
-              },
+              fontSize: "1.5rem",
+              fontWeight: "bold",
             }}
-          />
+          >
+            {quantity}
+          </Typography>
+          <IconButton onClick={incrementQuantity}>
+            <AddIcon />
+          </IconButton>
         </Box>
       </Box>
 

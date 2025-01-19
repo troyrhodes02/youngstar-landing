@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     const catalogResponse = await client.catalogApi.retrieveCatalogObject(
       itemId,
-      true,
+      true
     );
 
     if (
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     if (parentItemId) {
       const parentItemResponse = await client.catalogApi.retrieveCatalogObject(
         parentItemId,
-        true,
+        true
       );
       parentItemName =
         parentItemResponse.result.object?.itemData?.name || parentItemName;
@@ -47,18 +47,16 @@ export async function POST(request: Request) {
 
     const checkoutResponse = await client.checkoutApi.createPaymentLink({
       idempotencyKey: Date.now().toString(),
-      order: {
+      quickPay: {
+        name: fullItemName,
+        priceMoney: {
+          amount: BigInt(itemPrice) * BigInt(quantity), // Adjust for quantity
+          currency: "USD",
+        },
         locationId: process.env.SQUARE_LOCATION_ID!,
-        lineItems: [
-          {
-            name: fullItemName,
-            quantity: quantity.toString(), // Use quantity here
-            basePriceMoney: {
-              amount: BigInt(itemPrice),
-              currency: "USD",
-            },
-          },
-        ],
+      },
+      checkoutOptions: {
+        askForShippingAddress: true, // Enables shipping address input
       },
     });
 
@@ -76,7 +74,7 @@ export async function POST(request: Request) {
     console.error("Square Checkout Error:", error);
     return NextResponse.json(
       { error: "Failed to create checkout link" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
