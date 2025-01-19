@@ -1,14 +1,15 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 
 const images = [
-  "/collage1.png",
-  "/collage2.png",
-  "/collage5.png",
-  "/collage4.png",
-  "/collage3.png",
+  "/collage1.jpg",
+  "/collage2.jpg",
+  "/collage5.jpg",
+  "/collage4.jpg",
+  "/collage3.jpg",
 ];
 
 export const HeaderDesktop: React.FC = () => {
@@ -33,15 +34,12 @@ export const HeaderDesktop: React.FC = () => {
             overflow: "hidden",
           }}
         >
-          <Box
-            component="img"
+          <Image
             src={image}
             alt={`Collage Image ${index + 1}`}
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
+            layout="fill"
+            objectFit="cover"
+            priority={index === 0}
           />
           <Box
             sx={{

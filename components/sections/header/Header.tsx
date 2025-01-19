@@ -7,7 +7,7 @@ import { HeaderMobile } from "./HeaderMobile";
 
 export const Header: React.FC = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md")); 
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return isMobile ? <HeaderMobile /> : <HeaderDesktop />;
 };

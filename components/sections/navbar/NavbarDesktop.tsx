@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box } from "@mui/material";
 import Link from "next/link";
 
 interface NavbarDesktopProps {
@@ -26,9 +26,11 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
       };
     }
   }, [alwaysWhite]);
+
   const navbarBackgroundColor =
     alwaysWhite || isScrolled ? "white" : "transparent";
   const navbarTextColor = alwaysWhite || isScrolled ? "black" : "white";
+  const starColor = alwaysWhite || isScrolled ? "red" : "white";
 
   return (
     <AppBar
@@ -54,20 +56,39 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
       >
         <Box sx={{ flex: 1 }} />
 
-        <Typography
-          variant="h4"
+        <Box
           sx={{
-            fontWeight: "bold",
-            textAlign: "center",
+            display: "flex",
+            alignItems: "center",
             flex: 1,
-            fontSize: "2.5rem",
-            letterSpacing: "7px",
-            color: "inherit",
+            justifyContent: "center",
           }}
         >
-          YOUNGSTARWORLD
-        </Typography>
-        
+          <Box
+            sx={{
+              width: "25px",
+              height: "25px",
+              backgroundColor: starColor,
+              clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+              transition: "background-color 0.3s ease",
+              marginRight: "15px",
+              display: "inline-block",
+            }}
+          />
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "2.5rem",
+              letterSpacing: "7px",
+              color: "inherit",
+              lineHeight: 1,
+            }}
+          >
+            YOUNGSTARWORLD
+          </Typography>
+        </Box>
+
         <Box
           sx={{
             flex: 1,
@@ -85,7 +106,7 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
                 textTransform: "uppercase",
                 fontWeight: "500",
                 fontSize: "1.25rem",
-                color: "inherit",
+                color: navbarTextColor,
                 textDecoration: "none",
                 "&:hover": { textDecoration: "underline" },
               }}
@@ -101,7 +122,7 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
                 textTransform: "uppercase",
                 fontWeight: "500",
                 fontSize: "1.25rem",
-                color: "inherit",
+                color: navbarTextColor,
                 textDecoration: "none",
                 "&:hover": { textDecoration: "underline" },
               }}

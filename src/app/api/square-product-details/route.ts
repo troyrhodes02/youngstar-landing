@@ -10,7 +10,10 @@ export async function POST(request: Request) {
   const { itemId } = await request.json();
 
   try {
-    const { result } = await client.catalogApi.retrieveCatalogObject(itemId, true);
+    const { result } = await client.catalogApi.retrieveCatalogObject(
+      itemId,
+      true,
+    );
 
     if (!result.object) {
       throw new Error("Item not found");
@@ -21,9 +24,10 @@ export async function POST(request: Request) {
 
     const images = await Promise.all(
       imageIds.map(async (imageId) => {
-        const imageResponse = await client.catalogApi.retrieveCatalogObject(imageId);
-        return imageResponse.result.object?.imageData?.url || null; 
-      })
+        const imageResponse =
+          await client.catalogApi.retrieveCatalogObject(imageId);
+        return imageResponse.result.object?.imageData?.url || null;
+      }),
     );
 
     const validImages = images.filter((url) => url !== null);
@@ -35,6 +39,9 @@ export async function POST(request: Request) {
     return NextResponse.json({ images: validImages, price, name });
   } catch (error) {
     console.error("Error fetching product details:", error);
-    return NextResponse.json({ error: "Failed to fetch product details" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to fetch product details" },
+      { status: 500 },
+    );
   }
 }

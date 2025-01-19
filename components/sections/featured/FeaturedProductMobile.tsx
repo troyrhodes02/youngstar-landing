@@ -13,9 +13,14 @@ const sizeVariations: Record<SizeKey, string> = {
   XL: "3R3FJDBGTW3QYVDW6WKAP3DN",
 };
 
-const StyledButton = styled(({ isSelected, ...props }: { isSelected: boolean } & React.ComponentProps<typeof Button>) => (
-  <Button {...props} />
-))(({ isSelected }) => ({
+const StyledButton = styled(
+  ({
+    isSelected,
+    ...props
+  }: { isSelected: boolean } & React.ComponentProps<typeof Button>) => (
+    <Button {...props} />
+  ),
+)(({ isSelected }) => ({
   fontSize: "1rem",
   fontWeight: "bold",
   textTransform: "uppercase",
@@ -30,9 +35,14 @@ const StyledButton = styled(({ isSelected, ...props }: { isSelected: boolean } &
   },
 }));
 
-const BuyNowButton = styled(({ isActive, ...props }: { isActive: boolean } & React.ComponentProps<typeof Button>) => (
-  <Button {...props} />
-))(({ isActive }) => ({
+const BuyNowButton = styled(
+  ({
+    isActive,
+    ...props
+  }: { isActive: boolean } & React.ComponentProps<typeof Button>) => (
+    <Button {...props} />
+  ),
+)(({ isActive }) => ({
   fontSize: "1.2rem",
   fontWeight: "bold",
   textTransform: "uppercase",

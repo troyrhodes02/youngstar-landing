@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Box, Typography } from "@mui/material";
 
 export const MeetTheCreatorMobile = () => {
@@ -13,19 +14,24 @@ export const MeetTheCreatorMobile = () => {
       }}
     >
       <Box
-        component="img"
-        src="/alyssa2.png"
-        alt="Creator"
         sx={{
           position: "absolute",
           top: 0,
           left: 0,
           width: "100%",
           height: "60%",
-          objectFit: "cover",
-          objectPosition: "center",
+          overflow: "hidden",
         }}
-      />
+      >
+        <Image
+          src="/alyssa2.jpg"
+          alt="Creator"
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          priority
+        />
+      </Box>
 
       <Box
         sx={{
@@ -46,11 +52,21 @@ export const MeetTheCreatorMobile = () => {
           sx={{
             fontWeight: "bold",
             color: "#333",
-            marginBottom: "10px",
             textAlign: "center",
           }}
         >
-          Meet the Creator
+          Meet Alyssa,
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: "bold",
+            color: "#333",
+            textAlign: "center",
+            marginBottom: "10px",
+          }}
+        >
+          Creator of YOUNGSTARWORLD
         </Typography>
         <Typography
           variant="body2"
@@ -61,26 +77,16 @@ export const MeetTheCreatorMobile = () => {
             width: "95%",
           }}
         >
-          Street fashion has had a profound influence on urban communities,
-          acting as a powerful form of self-expression and cultural identity.
-          Emerging and blending influences from music, art, and social
-          movements, it became a way for individuals, especially youth, to
-          showcase their personality, status, and creativity.  As it gained
-          popularity, street fashion empowered communities to embrace bold,
-          unique styles that reflect their experiences and backgrounds, breaking
-          traditional fashion norms. Over time, it has shaped not only local
-          trends but also global fashion, creating a lasting impact on how
-          culture and individuality are expressed through clothing. With social
-          media and digital platforms, people can freely share their styles,
-          beliefs, and stories, shaping both personal and global culture. It
-          empowers individuals to break norms and celebrate diversity. The world
-          is ours.  Creative youth are vital to the world as they bring fresh
-          ideas, innovation, and new perspectives that drive change. Their
-          energy and imagination challenge conventional thinking, inspire
-          progress, and shape future cultural, social, and technological trends.
-          By embracing their creativity, young people push boundaries, create
-          solutions, and influence the world in ways that make it more dynamic
-          and diverse.
+          <strong>OMG! Hey, I'm Alyssa!</strong> I'm a 21-year-old entrepreneur, growing media personality, and the proud creator of <strong>YOUNGSTARWORLD</strong>—a brand built from the heart of <strong>Dallas, Texas</strong>. My mission is simple: to bring confidence, style, and empowerment to today’s world through fashion.
+          <br />
+          <br />
+          With a mindset that says, <strong>“I’m a star, how could I not shine?”</strong> I channel that energy and creativity into every piece of clothing we create, treating fabric as a canvas to capture the vibrant energy and spirit of today’s youth.
+          <br />
+          <br />
+          At <strong>YOUNGSTARWORLD</strong>, we embrace the truth that <strong>we are the youth of society, the young stars of the world.</strong> Every design reflects that spirit of self-expression, confidence, and unity, making a statement that we’re here to shine and be seen.
+          <br />
+          <br />
+          Thank you for being part of this journey and supporting a brand that reflects the <strong>YOUNGSTAR energy</strong> you bring to the world. ^_−☆
         </Typography>
       </Box>
     </Box>

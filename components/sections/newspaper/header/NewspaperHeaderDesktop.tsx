@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Stack, Typography, Box, Modal } from "@mui/material";
 
 export const NewspaperHeaderDesktop = () => {
@@ -70,25 +71,29 @@ export const NewspaperHeaderDesktop = () => {
           }}
         />
         <Box
-          component="img"
-          src="/newspaperHeader.png"
-          alt="Newspaper Feature"
           sx={{
             position: "relative",
             width: "90%",
             height: "300px",
-            objectFit: "cover",
-            objectPosition: "50% 40%",
             marginTop: "20px",
             zIndex: 1,
-            transition: "transform 0.3s ease",
             cursor: "pointer",
+            transition: "transform 0.3s ease",
             "&:hover": {
               transform: "scale(1.05) translateY(-5px)",
             },
           }}
           onClick={handleImageClick}
-        />
+        >
+          <Image
+            src="/newspaperHeader.jpg"
+            alt="Newspaper Feature"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="50% 40%"
+            priority
+          />
+        </Box>
         <Stack
           sx={{
             position: "relative",
@@ -119,15 +124,20 @@ export const NewspaperHeaderDesktop = () => {
           }}
         >
           <Box
-            component="img"
-            src="/newspaperHeader.png"
-            alt="Newspaper Full Image"
             sx={{
+              position: "relative",
               width: "100%",
               height: "auto",
-              objectFit: "cover",
             }}
-          />
+          >
+            <Image
+              src="/newspaperHeader.jpg"
+              alt="Newspaper Full Image"
+              layout="responsive"
+              width={800}
+              height={600}
+            />
+          </Box>
         </Box>
       </Modal>
     </>
