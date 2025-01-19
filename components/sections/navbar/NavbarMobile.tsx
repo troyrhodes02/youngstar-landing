@@ -39,6 +39,7 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
           height: "64px",
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
           zIndex: 1100,
+          justifyContent: "center",
         }}
       >
         <Toolbar
