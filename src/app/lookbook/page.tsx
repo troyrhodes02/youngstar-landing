@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Stack, CircularProgress, Box } from "@mui/material";
 import { NewspaperHeader } from "../../../components/sections/newspaper/header/NewspaperHeader";
 import { Navbar } from "../../../components/sections/navbar/Navbar";
-import { Section1 } from "../../../components/sections/newspaper/section1/Section1"
+import { Section1 } from "../../../components/sections/newspaper/section1/Section1";
 import { Section2 } from "../../../components/sections/newspaper/section2/Section2";
 
 export default function Lookbook() {
@@ -13,7 +13,7 @@ export default function Lookbook() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -28,7 +28,7 @@ export default function Lookbook() {
             minHeight: "100vh",
             display: "flex",
             alignItems: "center",
-            justifyContent: 'center',
+            justifyContent: "center",
             backgroundColor: "#f0f0f0",
           }}
         >
@@ -66,8 +66,8 @@ export default function Lookbook() {
             }}
           >
             <NewspaperHeader />
-            <Section1/>
-            <Section2/>
+            <Section1 />
+            <Section2 />
           </Box>
         </Stack>
       )}

@@ -31,9 +31,14 @@ const StyledButton = styled(Button)({
   },
 });
 
-const BuyNowButton = styled(({ isActive, ...props }: { isActive: boolean } & React.ComponentProps<typeof Button>) => (
-  <Button {...props} />
-))(({ isActive }) => ({
+const BuyNowButton = styled(
+  ({
+    isActive,
+    ...props
+  }: { isActive: boolean } & React.ComponentProps<typeof Button>) => (
+    <Button {...props} />
+  ),
+)(({ isActive }) => ({
   fontSize: "1.5rem",
   fontWeight: "bold",
   textTransform: "uppercase",
@@ -79,7 +84,10 @@ export const FeaturedProductDesktop = () => {
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + productImages.length) % productImages.length);
+    setCurrentIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + productImages.length) % productImages.length,
+    );
   };
 
   const handleBuyNow = async (variationId: string, size: string) => {
@@ -101,18 +109,35 @@ export const FeaturedProductDesktop = () => {
   };
 
   const getPosition = (index: number) => {
-    const relativeIndex = (index - currentIndex + productImages.length) % productImages.length;
+    const relativeIndex =
+      (index - currentIndex + productImages.length) % productImages.length;
     switch (relativeIndex) {
       case 0:
         return { transform: "translateX(0)", zIndex: 3, opacity: 1, scale: 1 };
       case 1:
-        return { transform: "translateX(350px) scale(0.8)", zIndex: 2, opacity: 0.8 };
+        return {
+          transform: "translateX(350px) scale(0.8)",
+          zIndex: 2,
+          opacity: 0.8,
+        };
       case 2:
-        return { transform: "translateX(650px) scale(0.6)", zIndex: 1, opacity: 0.6 };
+        return {
+          transform: "translateX(650px) scale(0.6)",
+          zIndex: 1,
+          opacity: 0.6,
+        };
       case productImages.length - 1:
-        return { transform: "translateX(-350px) scale(0.8)", zIndex: 2, opacity: 0.8 };
+        return {
+          transform: "translateX(-350px) scale(0.8)",
+          zIndex: 2,
+          opacity: 0.8,
+        };
       case productImages.length - 2:
-        return { transform: "translateX(-650px) scale(0.6)", zIndex: 1, opacity: 0.6 };
+        return {
+          transform: "translateX(-650px) scale(0.6)",
+          zIndex: 1,
+          opacity: 0.6,
+        };
       default:
         return { transform: "scale(0)", opacity: 0, zIndex: 0 };
     }
@@ -235,7 +260,9 @@ export const FeaturedProductDesktop = () => {
 
       <BuyNowButton
         isActive={!!selectedSize}
-        onClick={() => handleBuyNow(sizeVariations[selectedSize!], selectedSize!)}
+        onClick={() =>
+          handleBuyNow(sizeVariations[selectedSize!], selectedSize!)
+        }
         disabled={!selectedSize}
       >
         Buy Now

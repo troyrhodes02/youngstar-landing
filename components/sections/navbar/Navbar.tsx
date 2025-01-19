@@ -26,7 +26,5 @@ export const Navbar: React.FC<NavbarProps> = ({ alwaysWhite }) => {
     return <NavbarMobile alwaysWhite={true} />;
   }
 
-  return (
-    <NavbarDesktop alwaysWhite={alwaysWhite || scrolled} />
-  );
+  return <NavbarDesktop alwaysWhite={alwaysWhite || scrolled} />;
 };

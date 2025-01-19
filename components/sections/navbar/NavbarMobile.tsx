@@ -27,6 +27,8 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
       setDrawerOpen(open);
     };
 
+  const starColor = "red";
+
   return (
     <>
       <AppBar
@@ -36,64 +38,81 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
           color: "black",
           height: "64px",
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-          zIndex: 1100, 
+          zIndex: 1100,
         }}
       >
-        <Toolbar>
-          <Typography
-            variant="h6"
+        <Toolbar
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "0 16px",
+          }}
+        >
+          <Box />
+
+          <Box
             sx={{
-              fontWeight: "bold",
-              textAlign: "center",
-              flex: 1,
-              fontSize: "1.5rem",
-              letterSpacing: "5px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            YOUNGSTARWORLD
-          </Typography>
+            <Box
+              sx={{
+                width: "20px",
+                height: "20px",
+                backgroundColor: starColor,
+                clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+                marginRight: "8px",
+              }}
+            />
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: "bold",
+                fontSize: "1.5rem",
+                letterSpacing: "5px",
+                textAlign: "center",
+              }}
+            >
+              YOUNGSTARWORLD
+            </Typography>
+          </Box>
+
           <IconButton edge="end" color="inherit" onClick={toggleDrawer(true)}>
             <MenuIcon />
           </IconButton>
         </Toolbar>
       </AppBar>
+
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <Box sx={{ width: "30%" }}>
+        <Box sx={{ width: "60%" }}>
           <List>
             <ListItem component="div" sx={{ padding: 0 }}>
               <Link href="/" passHref>
-                <Box
-                  component="a"
+                <ListItemText
+                  primary="Home"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                    textDecoration: "none",
-                    color: "inherit",
                     padding: "16px",
+                    color: "black",
+                    cursor: "pointer",
                   }}
                   onClick={toggleDrawer(false)}
-                >
-                  <ListItemText primary="Home" />
-                </Box>
+                />
               </Link>
             </ListItem>
             <ListItem component="div" sx={{ padding: 0 }}>
               <Link href="/lookbook" passHref>
-                <Box
-                  component="a"
+                <ListItemText
+                  primary="Lookbook"
                   sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                    textDecoration: "none",
-                    color: "inherit",
                     padding: "16px",
+                    color: "black",
+                    cursor: "pointer",
                   }}
                   onClick={toggleDrawer(false)}
-                >
-                  <ListItemText primary="Lookbook" />
-                </Box>
+                />
               </Link>
             </ListItem>
           </List>
