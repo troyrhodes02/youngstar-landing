@@ -50,13 +50,13 @@ export async function POST(request: Request) {
       quickPay: {
         name: fullItemName,
         priceMoney: {
-          amount: BigInt(itemPrice) * BigInt(quantity), // Adjust for quantity
+          amount: BigInt(itemPrice) * BigInt(quantity),
           currency: "USD",
         },
         locationId: process.env.SQUARE_LOCATION_ID!,
       },
       checkoutOptions: {
-        askForShippingAddress: true, // Enables shipping address input
+        askForShippingAddress: true,
       },
     });
 
