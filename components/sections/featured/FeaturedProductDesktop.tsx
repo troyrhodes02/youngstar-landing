@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, IconButton, styled } from "@mui/material";
+import { Box, Typography, Button, IconButton, styled, TextField } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
@@ -56,6 +56,7 @@ const BuyNowButton = styled(
 export const FeaturedProductDesktop = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<SizeKey | null>(null);
+  const [quantity, setQuantity] = useState(1);
   const [productImages, setProductImages] = useState<string[]>([]);
   const [productPrice, setProductPrice] = useState<number | null>(null);
   const [productName, setProductName] = useState<string>("");
@@ -90,11 +91,12 @@ export const FeaturedProductDesktop = () => {
     );
   };
 
-  const handleBuyNow = async (variationId: string, size: string) => {
+  const handleBuyNow = async (variationId: string, size: string, quantity: number) => {
     try {
       const { data } = await axios.post("/api/square-checkout", {
         itemId: variationId,
         size,
+        quantity,
       });
 
       if (data.checkoutUrl) {
@@ -142,6 +144,8 @@ export const FeaturedProductDesktop = () => {
         return { transform: "scale(0)", opacity: 0, zIndex: 0 };
     }
   };
+
+  const adjustedPrice = productPrice ? (productPrice * quantity) / 100 : 0;
 
   return (
     <Box
@@ -233,15 +237,53 @@ export const FeaturedProductDesktop = () => {
         {productName || "Loading Product..."}
       </Typography>
 
-      <Typography
+      <Box
         sx={{
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
           marginTop: "15px",
-          fontSize: "2.5rem",
-          letterSpacing: "3px",
         }}
       >
-        {productPrice ? `$${(productPrice / 100).toFixed(2)}` : "Loading..."}
-      </Typography>
+        <Typography
+          sx={{
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+          }}
+        >
+          Quantity
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+          }}
+        >
+          <Typography
+            sx={{
+              fontSize: "2.5rem",
+              letterSpacing: "3px",
+            }}
+          >
+            ${adjustedPrice.toFixed(2)}
+          </Typography>
+
+          <TextField
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
+            inputProps={{ min: 1, style: { textAlign: "center", fontSize: "1.2rem" } }}
+            sx={{
+              width: "80px",
+              ".MuiInputBase-input": {
+                textAlign: "center",
+                fontSize: "1.2rem",
+              },
+            }}
+          />
+        </Box>
+      </Box>
 
       <Box sx={{ display: "flex", gap: "10px", marginY: "20px" }}>
         {Object.keys(sizeVariations).map((size) => (
@@ -261,7 +303,7 @@ export const FeaturedProductDesktop = () => {
       <BuyNowButton
         isActive={!!selectedSize}
         onClick={() =>
-          handleBuyNow(sizeVariations[selectedSize!], selectedSize!)
+          handleBuyNow(sizeVariations[selectedSize!], selectedSize!, quantity)
         }
         disabled={!selectedSize}
       >
