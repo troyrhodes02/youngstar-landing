@@ -34,3 +34,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Square API Integration
+
+For the checkout functionality to work properly, you need to set up the following environment variables:
+
+```
+# Square API Credentials
+SQUARE_ACCESS_TOKEN=your_square_access_token_here
+SQUARE_LOCATION_ID=your_square_location_id_here
+SUPPORT_EMAIL=support@youngstar.example.com
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+To obtain your Square API credentials:
+1. Create a [Square Developer account](https://developer.squareup.com/)
+2. Create a new application
+3. Obtain your access token from the Square Developer Dashboard
+4. Get your location ID from the Locations API or the Developer Dashboard
+5. Add these credentials to your `.env.local` file

@@ -1,15 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useMediaQuery } from "@mui/material";
+import { useMediaQuery, Box } from "@mui/material";
 import { NavbarDesktop } from "./NavbarDesktop";
 import { NavbarMobile } from "./NavbarMobile";
 
 interface NavbarProps {
   alwaysWhite?: boolean;
+  showSecureBanner?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ alwaysWhite }) => {
+export const Navbar: React.FC<NavbarProps> = ({ alwaysWhite, showSecureBanner = false }) => {
   const isMobile = useMediaQuery("(max-width:960px)");
   const [scrolled, setScrolled] = useState(false);
 
@@ -23,8 +24,8 @@ export const Navbar: React.FC<NavbarProps> = ({ alwaysWhite }) => {
   }, []);
 
   if (isMobile) {
-    return <NavbarMobile alwaysWhite={true} />;
+    return <NavbarMobile alwaysWhite={true} showSecureBanner={showSecureBanner} />;
   }
 
-  return <NavbarDesktop alwaysWhite={alwaysWhite || scrolled} />;
+  return <NavbarDesktop alwaysWhite={alwaysWhite || scrolled} showSecureBanner={showSecureBanner} />;
 };

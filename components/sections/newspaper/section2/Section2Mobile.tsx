@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { Typography, Box, Grid, Modal } from "@mui/material";
+import { Typography, Box, Grid, Modal, useTheme, useMediaQuery } from "@mui/material";
+import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section2Mobile = () => {
+  const theme = useTheme();
+  const isXsScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string>("");
 
@@ -21,7 +25,7 @@ export const Section2Mobile = () => {
     <>
       <Box
         sx={{
-          padding: "30px 15px",
+          padding: { xs: "20px 10px", sm: "25px 12px", md: "30px 15px" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -30,16 +34,16 @@ export const Section2Mobile = () => {
       >
         <Box
           sx={{
-            width: "90%",
+            width: { xs: "95%", sm: "92%", md: "90%" },
             height: "2px",
             backgroundColor: "#333",
-            marginBottom: "30px",
+            marginBottom: { xs: "20px", sm: "25px", md: "30px" },
           }}
         />
 
         <Grid
           container
-          spacing={3}
+          spacing={{ xs: 2, sm: 2.5, md: 3 }}
           sx={{
             maxWidth: "100%",
             justifyContent: "center",
@@ -67,15 +71,16 @@ export const Section2Mobile = () => {
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
+                  mb: { xs: 2, sm: 2.5, md: 3 },
                 }}
               >
                 <Box
                   sx={{
                     position: "relative",
                     width: "100%",
-                    maxWidth: "400px",
-                    height: "250px",
-                    marginBottom: "15px",
+                    maxWidth: { xs: "280px", sm: "350px", md: "400px" },
+                    height: { xs: "200px", sm: "225px", md: "250px" },
+                    marginBottom: { xs: "12px", sm: "14px", md: "15px" },
                     borderRadius: "10px",
                     overflow: "hidden",
                     cursor: "pointer",
@@ -86,23 +91,25 @@ export const Section2Mobile = () => {
                   }}
                   onClick={() => handleImageClick(item.image)}
                 >
-                  <Image
+                  <OptimizedImage
                     src={`/${item.image}`}
                     alt={`Image ${index + 1}`}
                     layout="fill"
                     objectFit="cover"
                     objectPosition={item.objectPosition || "center"}
                     style={{ borderRadius: "10px" }}
-                    priority
+                    priority={index === 0}
+                    lazyLoad={index !== 0}
                   />
                 </Box>
                 <Typography
                   sx={{
-                    fontSize: "1.2rem",
+                    fontSize: { xs: "1rem", sm: "1.1rem", md: "1.2rem" },
                     fontWeight: "bold",
                     lineHeight: 1.5,
                     textAlign: "center",
                     color: "#333",
+                    px: { xs: 1, sm: 2, md: 3 },
                   }}
                 >
                   {item.text}
@@ -120,9 +127,9 @@ export const Section2Mobile = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "90%",
-            maxWidth: "600px",
-            maxHeight: "80%",
+            width: "95%",
+            maxWidth: { xs: "350px", sm: "500px", md: "600px" },
+            maxHeight: { xs: "80%", sm: "85%" },
             overflow: "hidden",
             backgroundColor: "#fff",
             outline: "none",
@@ -137,12 +144,13 @@ export const Section2Mobile = () => {
               height: "auto",
             }}
           >
-            <Image
+            <OptimizedImage
               src={`/${currentImage}`}
               alt="Full View"
               layout="responsive"
               width={600}
               height={400}
+              lazyLoad={false}
             />
           </Box>
         </Box>

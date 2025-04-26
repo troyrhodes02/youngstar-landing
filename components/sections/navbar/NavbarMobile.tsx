@@ -12,14 +12,18 @@ import {
   List,
   ListItem,
   ListItemText,
+  Stack,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { CartIcon } from "../../cart/CartIcon";
+import { FaLock } from "react-icons/fa";
 
 interface NavbarMobileProps {
   alwaysWhite?: boolean;
+  showSecureBanner?: boolean;
 }
 
-export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
+export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite, showSecureBanner = false }) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer =
@@ -28,6 +32,7 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
     };
 
   const starColor = "red";
+  const appBarHeight = showSecureBanner ? "88px" : "64px";
 
   return (
     <>
@@ -36,10 +41,11 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
         sx={{
           backgroundColor: "white",
           color: "black",
-          height: "64px",
+          height: appBarHeight,
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
           zIndex: 1100,
           justifyContent: "center",
+          transition: "height 0.3s ease",
         }}
       >
         <Toolbar
@@ -48,9 +54,10 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
             justifyContent: "space-between",
             alignItems: "center",
             padding: "0 16px",
+            minHeight: "64px",
           }}
         >
-          <Box />
+          <CartIcon />
 
           <Box
             sx={{
@@ -85,6 +92,25 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
             <MenuIcon />
           </IconButton>
         </Toolbar>
+        {showSecureBanner && (
+          <Box sx={{ 
+            width: '100%', 
+            bgcolor: 'red', 
+            py: 0.5,
+            textAlign: 'center',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0
+          }}>
+            <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+              <FaLock size={12} color="white" />
+              <Typography variant="caption" sx={{ fontWeight: 'bold', color: 'white', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                Secure Checkout
+              </Typography>
+            </Stack>
+          </Box>
+        )}
       </AppBar>
 
       <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
@@ -107,6 +133,19 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite }) => {
               <Link href="/lookbook" passHref>
                 <ListItemText
                   primary="Lookbook"
+                  sx={{
+                    padding: "16px",
+                    color: "black",
+                    cursor: "pointer",
+                  }}
+                  onClick={toggleDrawer(false)}
+                />
+              </Link>
+            </ListItem>
+            <ListItem component="div" sx={{ padding: 0 }}>
+              <Link href="/cart" passHref>
+                <ListItemText
+                  primary="Cart"
                   sx={{
                     padding: "16px",
                     color: "black",

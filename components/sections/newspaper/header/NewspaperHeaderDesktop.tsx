@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { Stack, Typography, Box, Modal } from "@mui/material";
+import { Stack, Typography, Box, Modal, useTheme, useMediaQuery } from "@mui/material";
+import { OptimizedImage } from "../../../OptimizedImage";
 
 export const NewspaperHeaderDesktop = () => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('xl'));
+  const isMediumLargeScreen = useMediaQuery(theme.breakpoints.between('lg', 'xl'));
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = () => {
@@ -21,7 +25,7 @@ export const NewspaperHeaderDesktop = () => {
         sx={{
           position: "relative",
           width: "100%",
-          padding: "20px 0",
+          padding: { lg: "15px 0", xl: "20px 0" },
           alignItems: "center",
           overflow: "hidden",
           "&::before": {
@@ -38,10 +42,10 @@ export const NewspaperHeaderDesktop = () => {
         <Stack
           sx={{
             position: "relative",
-            width: "90%",
+            width: { lg: "95%", xl: "90%" },
             height: "2px",
             backgroundColor: "#333",
-            marginBottom: "10px",
+            marginBottom: { lg: "8px", xl: "10px" },
             zIndex: 1,
           }}
         />
@@ -49,13 +53,14 @@ export const NewspaperHeaderDesktop = () => {
           variant="h1"
           sx={{
             position: "relative",
-            fontSize: "7rem",
+            fontSize: { lg: "5rem", xl: "7rem" },
             fontWeight: "bold",
             fontFamily: "'Times New Roman', Times, serif",
             textTransform: "uppercase",
-            letterSpacing: "5px",
+            letterSpacing: { lg: "3px", xl: "5px" },
             zIndex: 1,
             color: "#333",
+            textAlign: "center",
           }}
         >
           Volume 1 Archives
@@ -63,19 +68,19 @@ export const NewspaperHeaderDesktop = () => {
         <Stack
           sx={{
             position: "relative",
-            width: "90%",
+            width: { lg: "95%", xl: "90%" },
             height: "2px",
             backgroundColor: "#333",
-            marginTop: "10px",
+            marginTop: { lg: "8px", xl: "10px" },
             zIndex: 1,
           }}
         />
         <Box
           sx={{
             position: "relative",
-            width: "90%",
-            height: "300px",
-            marginTop: "20px",
+            width: { lg: "95%", xl: "90%" },
+            height: { lg: "250px", xl: "300px" },
+            marginTop: { lg: "15px", xl: "20px" },
             zIndex: 1,
             cursor: "pointer",
             transition: "transform 0.3s ease",
@@ -85,22 +90,23 @@ export const NewspaperHeaderDesktop = () => {
           }}
           onClick={handleImageClick}
         >
-          <Image
+          <OptimizedImage
             src="/newspaperHeader.jpg"
             alt="Newspaper Feature"
             layout="fill"
             objectFit="cover"
             objectPosition="50% 40%"
             priority
+            lazyLoad={false}
           />
         </Box>
         <Stack
           sx={{
             position: "relative",
-            width: "90%",
+            width: { lg: "95%", xl: "90%" },
             height: "2px",
             backgroundColor: "#333",
-            marginTop: "20px",
+            marginTop: { lg: "15px", xl: "20px" },
             zIndex: 1,
           }}
         />
@@ -114,7 +120,7 @@ export const NewspaperHeaderDesktop = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "90%",
-            maxWidth: "800px",
+            maxWidth: { lg: "700px", xl: "800px" },
             maxHeight: "80%",
             overflow: "hidden",
             backgroundColor: "#fff",
@@ -130,12 +136,13 @@ export const NewspaperHeaderDesktop = () => {
               height: "auto",
             }}
           >
-            <Image
+            <OptimizedImage
               src="/newspaperHeader.jpg"
               alt="Newspaper Full Image"
               layout="responsive"
               width={800}
               height={600}
+              lazyLoad={false}
             />
           </Box>
         </Box>
