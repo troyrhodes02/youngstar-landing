@@ -28,7 +28,7 @@ export default function AddToCartButton({
 
   const handleAddToCart = () => {
     setIsAdding(true);
-    
+
     addToCart({
       id: productId,
       name: productName,
@@ -36,7 +36,7 @@ export default function AddToCartButton({
       image: productImage,
       size: size,
       variationId: variationId,
-      quantity: 1
+      quantity: 1,
     });
 
     // Show animation effect
@@ -57,4 +57,4 @@ export default function AddToCartButton({
       {isAdding ? "Added!" : "Add to Cart"}
     </button>
   );
-} 
+}

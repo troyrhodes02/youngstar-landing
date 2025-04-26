@@ -8,7 +8,7 @@ import { FeaturedProductDesktop } from "./FeaturedProductDesktop";
 export const FeaturedProduct: React.FC = () => {
   const theme = useTheme();
   // Use theme.breakpoints for consistency with MUI's responsive system
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return isMobile ? <FeaturedProductMobile /> : <FeaturedProductDesktop />;
 };

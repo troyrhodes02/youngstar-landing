@@ -1,7 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, IconButton, styled, TextField, useMediaQuery, useTheme, Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  IconButton,
+  styled,
+  TextField,
+  useMediaQuery,
+  useTheme,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import axios from "axios";
@@ -57,20 +68,26 @@ const AddToCartButton = styled(
 
 export const FeaturedProductDesktop = () => {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery('(min-width:1600px)');
-  const isMediumScreen = useMediaQuery('(min-width:1200px) and (max-width:1599px)');
-  const isSmallScreen = useMediaQuery('(min-width:900px) and (max-width:1199px)');
-  const isXSmallScreen = useMediaQuery('(max-width:899px)');
-  
+  const isLargeScreen = useMediaQuery("(min-width:1600px)");
+  const isMediumScreen = useMediaQuery(
+    "(min-width:1200px) and (max-width:1599px)",
+  );
+  const isSmallScreen = useMediaQuery(
+    "(min-width:900px) and (max-width:1199px)",
+  );
+  const isXSmallScreen = useMediaQuery("(max-width:899px)");
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<SizeKey | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [productImages, setProductImages] = useState<string[]>([]);
   const [productPrice, setProductPrice] = useState<number | null>(null);
   const [productName, setProductName] = useState<string>("");
-  const [productId, setProductId] = useState<string>("4XCQCJ6IZOHFRVDH5ZNHMIUQ");
+  const [productId, setProductId] = useState<string>(
+    "4XCQCJ6IZOHFRVDH5ZNHMIUQ",
+  );
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  
+
   const router = useRouter();
   const { addItem } = useCart();
 
@@ -144,8 +161,11 @@ export const FeaturedProductDesktop = () => {
     router.push("/cart");
   };
 
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
@@ -154,7 +174,7 @@ export const FeaturedProductDesktop = () => {
   const getPosition = (index: number) => {
     const relativeIndex =
       (index - currentIndex + productImages.length) % productImages.length;
-      
+
     // Adjust scale and translation values based on screen size
     const scale = {
       large: { center: 1, side: 0.8, farSide: 0.6 },
@@ -162,16 +182,16 @@ export const FeaturedProductDesktop = () => {
       small: { center: 1, side: 0.75, farSide: 0.5 },
       xsmall: { center: 1, side: 0.7, farSide: 0 },
     };
-    
+
     const translate = {
       large: { side: 350, farSide: 650 },
       medium: { side: 250, farSide: 450 },
       small: { side: 180, farSide: 320 },
       xsmall: { side: 150, farSide: 0 },
     };
-    
+
     let currentScale, currentTranslate;
-    
+
     if (isLargeScreen) {
       currentScale = scale.large;
       currentTranslate = translate.large;
@@ -188,7 +208,12 @@ export const FeaturedProductDesktop = () => {
 
     switch (relativeIndex) {
       case 0:
-        return { transform: "translateX(0)", zIndex: 3, opacity: 1, scale: currentScale.center };
+        return {
+          transform: "translateX(0)",
+          zIndex: 3,
+          opacity: 1,
+          scale: currentScale.center,
+        };
       case 1:
         return {
           transform: `translateX(${currentTranslate.side}px) scale(${currentScale.side})`,
@@ -227,7 +252,7 @@ export const FeaturedProductDesktop = () => {
     if (isSmallScreen) return "90%";
     return "95%";
   };
-  
+
   const getArrowPosition = () => {
     if (isLargeScreen) return { left: "5%", right: "5%" };
     if (isMediumScreen) return { left: "3%", right: "3%" };
@@ -256,7 +281,7 @@ export const FeaturedProductDesktop = () => {
             xs: "2.5rem",
             sm: "3rem",
             md: "3.5rem",
-            lg: "4rem"
+            lg: "4rem",
           },
           letterSpacing: "2px",
         }}
@@ -381,7 +406,10 @@ export const FeaturedProductDesktop = () => {
             type="number"
             value={quantity}
             onChange={(e) => setQuantity(Math.max(1, Number(e.target.value)))}
-            inputProps={{ min: 1, style: { textAlign: "center", fontSize: "1.2rem" } }}
+            inputProps={{
+              min: 1,
+              style: { textAlign: "center", fontSize: "1.2rem" },
+            }}
             sx={{
               width: "80px",
               ".MuiInputBase-input": {
@@ -416,7 +444,7 @@ export const FeaturedProductDesktop = () => {
         >
           Add to Cart
         </AddToCartButton>
-        
+
         <Button
           variant="outlined"
           onClick={handleBuyNow}
@@ -438,9 +466,17 @@ export const FeaturedProductDesktop = () => {
           Buy Now
         </Button>
       </Box>
-      
-      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
           Item added to cart!
         </Alert>
       </Snackbar>

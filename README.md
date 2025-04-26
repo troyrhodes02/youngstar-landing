@@ -48,6 +48,7 @@ NEXT_PUBLIC_BASE_URL=http://localhost:3000
 ```
 
 To obtain your Square API credentials:
+
 1. Create a [Square Developer account](https://developer.squareup.com/)
 2. Create a new application
 3. Obtain your access token from the Square Developer Dashboard

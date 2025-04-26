@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { Typography, Box, Grid, Modal, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section2Mobile = () => {
   const theme = useTheme();
-  const isXsScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const isSmallScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  
+  const isXsScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string>("");
 

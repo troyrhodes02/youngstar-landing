@@ -26,15 +26,17 @@ export async function POST(request: Request) {
       idempotencyKey,
       order: {
         locationId,
-        lineItems: items.map((item: { catalogObjectId: string; quantity: string }) => ({
-          catalogObjectId: item.catalogObjectId,
-          quantity: item.quantity
-        })),
+        lineItems: items.map(
+          (item: { catalogObjectId: string; quantity: string }) => ({
+            catalogObjectId: item.catalogObjectId,
+            quantity: item.quantity,
+          }),
+        ),
         // Add customer details if provided
         ...(customer && {
           fulfillments: [
             {
-              type: 'SHIPMENT',
+              type: "SHIPMENT",
               shipmentDetails: {
                 recipient: {
                   displayName: `${customer.givenName} ${customer.familyName}`,
@@ -43,19 +45,20 @@ export async function POST(request: Request) {
                   address: {
                     addressLine1: customer.address.addressLine1,
                     locality: customer.address.locality,
-                    administrativeDistrictLevel1: customer.address.administrativeDistrictLevel1,
+                    administrativeDistrictLevel1:
+                      customer.address.administrativeDistrictLevel1,
                     postalCode: customer.address.postalCode,
-                    country: customer.address.country
-                  }
-                }
-              }
-            }
-          ]
-        })
+                    country: customer.address.country,
+                  },
+                },
+              },
+            },
+          ],
+        }),
       },
       checkoutOptions: {
         askForShippingAddress: !customer,
-        merchantSupportEmail: "support@youngstarpresence.com"
+        merchantSupportEmail: "support@youngstarpresence.com",
       },
     });
 
@@ -71,8 +74,13 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Square Checkout Error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed to create checkout link" },
-      { status: 500 }
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create checkout link",
+      },
+      { status: 500 },
     );
   }
 }

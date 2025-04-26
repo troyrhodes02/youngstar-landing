@@ -8,14 +8,12 @@ import { Navbar } from "../../../components/sections/navbar/Navbar";
 
 export default function CartPage() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   return (
-    <Box sx={{ bgcolor: 'black' }}>
+    <Box sx={{ bgcolor: "black" }}>
       <Navbar alwaysWhite showSecureBanner={true} />
-      <Box>
-        {isMobile ? <CartMobile /> : <CartDesktop />}
-      </Box>
+      <Box>{isMobile ? <CartMobile /> : <CartDesktop />}</Box>
     </Box>
   );
-} 
+}

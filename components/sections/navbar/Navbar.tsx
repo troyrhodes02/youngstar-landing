@@ -10,7 +10,10 @@ interface NavbarProps {
   showSecureBanner?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ alwaysWhite, showSecureBanner = false }) => {
+export const Navbar: React.FC<NavbarProps> = ({
+  alwaysWhite,
+  showSecureBanner = false,
+}) => {
   const isMobile = useMediaQuery("(max-width:960px)");
   const [scrolled, setScrolled] = useState(false);
 
@@ -24,8 +27,15 @@ export const Navbar: React.FC<NavbarProps> = ({ alwaysWhite, showSecureBanner = 
   }, []);
 
   if (isMobile) {
-    return <NavbarMobile alwaysWhite={true} showSecureBanner={showSecureBanner} />;
+    return (
+      <NavbarMobile alwaysWhite={true} showSecureBanner={showSecureBanner} />
+    );
   }
 
-  return <NavbarDesktop alwaysWhite={alwaysWhite || scrolled} showSecureBanner={showSecureBanner} />;
+  return (
+    <NavbarDesktop
+      alwaysWhite={alwaysWhite || scrolled}
+      showSecureBanner={showSecureBanner}
+    />
+  );
 };

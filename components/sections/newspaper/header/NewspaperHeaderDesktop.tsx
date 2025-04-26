@@ -1,14 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { Stack, Typography, Box, Modal, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Box,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { OptimizedImage } from "../../../OptimizedImage";
 
 export const NewspaperHeaderDesktop = () => {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('xl'));
-  const isMediumLargeScreen = useMediaQuery(theme.breakpoints.between('lg', 'xl'));
-  
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const isMediumLargeScreen = useMediaQuery(
+    theme.breakpoints.between("lg", "xl"),
+  );
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = () => {

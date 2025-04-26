@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { Stack, Typography, Box, Modal, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Stack,
+  Typography,
+  Box,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { OptimizedImage } from "../../../OptimizedImage";
 
 export const NewspaperHeaderMobile = () => {
   const theme = useTheme();
-  const isSmallMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMediumMobile = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  
+  const isSmallMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMediumMobile = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = () => {

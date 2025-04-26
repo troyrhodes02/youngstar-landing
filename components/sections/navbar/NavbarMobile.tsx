@@ -23,7 +23,10 @@ interface NavbarMobileProps {
   showSecureBanner?: boolean;
 }
 
-export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite, showSecureBanner = false }) => {
+export const NavbarMobile: React.FC<NavbarMobileProps> = ({
+  alwaysWhite,
+  showSecureBanner = false,
+}) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer =
@@ -71,7 +74,8 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite, showSec
                 width: "20px",
                 height: "20px",
                 backgroundColor: starColor,
-                clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+                clipPath:
+                  "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
                 marginRight: "8px",
               }}
             />
@@ -93,19 +97,34 @@ export const NavbarMobile: React.FC<NavbarMobileProps> = ({ alwaysWhite, showSec
           </IconButton>
         </Toolbar>
         {showSecureBanner && (
-          <Box sx={{ 
-            width: '100%', 
-            bgcolor: 'red', 
-            py: 0.5,
-            textAlign: 'center',
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0
-          }}>
-            <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+          <Box
+            sx={{
+              width: "100%",
+              bgcolor: "red",
+              py: 0.5,
+              textAlign: "center",
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          >
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              spacing={1}
+            >
               <FaLock size={12} color="white" />
-              <Typography variant="caption" sx={{ fontWeight: 'bold', color: 'white', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  fontWeight: "bold",
+                  color: "white",
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                }}
+              >
                 Secure Checkout
               </Typography>
             </Stack>

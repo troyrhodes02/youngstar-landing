@@ -33,7 +33,9 @@ export const useCart = () => {
   return context;
 };
 
-export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   // Load cart from localStorage on initial render
@@ -57,9 +59,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {
       const existingItemIndex = prevCart.findIndex(
-        (cartItem) => cartItem.id === item.id && cartItem.size === item.size
+        (cartItem) => cartItem.id === item.id && cartItem.size === item.size,
       );
-      
+
       if (existingItemIndex !== -1) {
         // If item already exists with the same size, update quantity
         const updatedCart = [...prevCart];
@@ -81,9 +83,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateQuantity = (id: string, quantity: number) => {
     setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
+      prevCart.map((item) => (item.id === id ? { ...item, quantity } : item)),
     );
   };
 
@@ -92,10 +92,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-  
+
   const totalPrice = cart.reduce(
     (total, item) => total + item.price * item.quantity,
-    0
+    0,
   );
 
   return (
@@ -114,4 +114,4 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </CartContext.Provider>
   );
-}; 
+};

@@ -74,7 +74,8 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
               width: "25px",
               height: "25px",
               backgroundColor: starColor,
-              clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+              clipPath:
+                "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
               transition: "background-color 0.3s ease",
               marginRight: "15px",
               display: "inline-block",
@@ -139,19 +140,34 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
         </Box>
       </Toolbar>
       {showSecureBanner && (
-        <Box sx={{ 
-          width: '100%', 
-          bgcolor: 'red', 
-          py: 1, 
-          textAlign: 'center',
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0
-        }}>
-          <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+        <Box
+          sx={{
+            width: "100%",
+            bgcolor: "red",
+            py: 1,
+            textAlign: "center",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+          >
             <FaLock size={14} color="white" />
-            <Typography variant="body2" sx={{ fontWeight: 'bold', color: 'white', textTransform: 'uppercase', letterSpacing: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: "bold",
+                color: "white",
+                textTransform: "uppercase",
+                letterSpacing: 1,
+              }}
+            >
               Secure Checkout
             </Typography>
           </Stack>

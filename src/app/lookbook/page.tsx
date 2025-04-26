@@ -1,7 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Stack, CircularProgress, Box, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Stack,
+  CircularProgress,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { NewspaperHeader } from "../../../components/sections/newspaper/header/NewspaperHeader";
 import { Navbar } from "../../../components/sections/navbar/Navbar";
 import { Section1 } from "../../../components/sections/newspaper/section1/Section1";
@@ -9,7 +15,7 @@ import { Section2 } from "../../../components/sections/newspaper/section2/Sectio
 
 export default function Lookbook() {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

@@ -9,8 +9,8 @@ export default function CartButton() {
   const { totalItems } = useCart();
 
   return (
-    <Link 
-      href="/cart" 
+    <Link
+      href="/cart"
       className="relative flex items-center justify-center p-2"
       aria-label="Shopping Cart"
     >
@@ -22,4 +22,4 @@ export default function CartButton() {
       )}
     </Link>
   );
-} 
+}

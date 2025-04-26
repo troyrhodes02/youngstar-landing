@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { Typography, Box, Grid, Modal, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section2Desktop = () => {
   const theme = useTheme();
-  const isLargeScreen = useMediaQuery(theme.breakpoints.up('xl'));
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between('lg', 'xl'));
-  
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string>("");
 

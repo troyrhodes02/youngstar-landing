@@ -42,4 +42,4 @@ export const CartIcon: React.FC<CartIconProps> = ({ color = "inherit" }) => {
       </Badge>
     </IconButton>
   );
-}; 
+};

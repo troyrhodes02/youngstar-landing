@@ -1,14 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { Typography, Box, Divider, Modal, useTheme, useMediaQuery } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Divider,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section1Mobile = () => {
   const theme = useTheme();
-  const isXsScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const isSmallScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'));
-  
+  const isXsScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = () => {
@@ -37,7 +44,8 @@ export const Section1Mobile = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginBottom: index < 2 ? { xs: "12px", sm: "14px", md: "16px" } : "0",
+              marginBottom:
+                index < 2 ? { xs: "12px", sm: "14px", md: "16px" } : "0",
               width: "100%",
             }}
           >

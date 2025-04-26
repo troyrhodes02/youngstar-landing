@@ -1,7 +1,18 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, styled, TextField, IconButton, useTheme, useMediaQuery, Snackbar, Alert } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  styled,
+  TextField,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "axios";
@@ -64,16 +75,18 @@ const ActionButton = styled(
 
 export const FeaturedProductMobile: React.FC = () => {
   const theme = useTheme();
-  const isXsScreen = useMediaQuery('(max-width:400px)');
-  
+  const isXsScreen = useMediaQuery("(max-width:400px)");
+
   const [productImages, setProductImages] = useState<string[]>([]);
   const [productPrice, setProductPrice] = useState<number | null>(null);
   const [productName, setProductName] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<SizeKey | null>(null);
   const [quantity, setQuantity] = useState(1);
-  const [productId, setProductId] = useState<string>("4XCQCJ6IZOHFRVDH5ZNHMIUQ");
+  const [productId, setProductId] = useState<string>(
+    "4XCQCJ6IZOHFRVDH5ZNHMIUQ",
+  );
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  
+
   const router = useRouter();
   const { addItem } = useCart();
 
@@ -137,8 +150,11 @@ export const FeaturedProductMobile: React.FC = () => {
     router.push("/cart");
   };
 
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
       return;
     }
     setSnackbarOpen(false);
@@ -260,7 +276,7 @@ export const FeaturedProductMobile: React.FC = () => {
           >
             ${adjustedPrice.toFixed(2)}
           </Typography>
-          <IconButton 
+          <IconButton
             onClick={decrementQuantity}
             size={isXsScreen ? "small" : "medium"}
           >
@@ -274,7 +290,7 @@ export const FeaturedProductMobile: React.FC = () => {
           >
             {quantity}
           </Typography>
-          <IconButton 
+          <IconButton
             onClick={incrementQuantity}
             size={isXsScreen ? "small" : "medium"}
           >
@@ -283,13 +299,13 @@ export const FeaturedProductMobile: React.FC = () => {
         </Box>
       </Box>
 
-      <Box 
-        sx={{ 
-          display: "flex", 
+      <Box
+        sx={{
+          display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          gap: { xs: "5px", sm: "10px" }, 
-          marginY: { xs: "15px", sm: "20px" }
+          gap: { xs: "5px", sm: "10px" },
+          marginY: { xs: "15px", sm: "20px" },
         }}
       >
         {Object.keys(sizeVariations).map((size) => (
@@ -307,13 +323,13 @@ export const FeaturedProductMobile: React.FC = () => {
         ))}
       </Box>
 
-      <Box 
-        sx={{ 
-          display: "flex", 
+      <Box
+        sx={{
+          display: "flex",
           flexDirection: { xs: "column", sm: "row" },
           gap: { xs: "10px", sm: "15px" },
           width: "100%",
-          justifyContent: "center" 
+          justifyContent: "center",
         }}
       >
         <ActionButton
@@ -329,7 +345,7 @@ export const FeaturedProductMobile: React.FC = () => {
         >
           Add to Cart
         </ActionButton>
-        
+
         <ActionButton
           isActive={false}
           onClick={handleBuyNow}
@@ -347,9 +363,17 @@ export const FeaturedProductMobile: React.FC = () => {
           Buy Now
         </ActionButton>
       </Box>
-      
-      <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
           Item added to cart!
         </Alert>
       </Snackbar>
