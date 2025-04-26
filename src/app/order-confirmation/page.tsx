@@ -1,19 +1,43 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { FaCheckCircle, FaHome, FaShoppingBag } from "react-icons/fa";
 
-export default function OrderConfirmationPage() {
+// Loading component for Suspense fallback
+function OrderLoading() {
+  return (
+    <div className="container mx-auto px-4 py-16 flex flex-col items-center">
+      <div className="w-full max-w-2xl bg-white shadow-lg rounded-lg p-8 text-center">
+        <div className="animate-pulse">
+          <div className="mx-auto h-16 w-16 rounded-full bg-gray-200 mb-6"></div>
+          <div className="h-8 bg-gray-200 rounded w-3/4 mx-auto mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded w-5/6 mx-auto mb-6"></div>
+          <div className="h-14 bg-gray-200 rounded-md w-2/3 mx-auto mb-8"></div>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <div className="h-12 bg-gray-200 rounded-md w-40 mx-auto"></div>
+            <div className="h-12 bg-gray-200 rounded-md w-40 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Order confirmation content with useSearchParams
+function OrderConfirmationContent() {
   const searchParams = useSearchParams();
   const [orderId, setOrderId] = useState<string | null>(null);
   
   useEffect(() => {
-    // Get order ID from URL params if available
-    const id = searchParams.get("orderId");
-    if (id) {
-      setOrderId(id);
+    if (searchParams) {
+      // Get order ID from URL params if available
+      const id = searchParams.get("orderId");
+      if (id) {
+        setOrderId(id);
+      }
     }
     
     // You could also fetch order details from your backend here if needed
@@ -88,5 +112,14 @@ export default function OrderConfirmationPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Main page component with Suspense
+export default function OrderConfirmationPage() {
+  return (
+    <Suspense fallback={<OrderLoading />}>
+      <OrderConfirmationContent />
+    </Suspense>
   );
 } 
