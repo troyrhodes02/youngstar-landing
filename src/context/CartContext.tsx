@@ -16,7 +16,7 @@ interface CartContextType {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
   addItem: (item: CartItem) => void;
-  removeFromCart: (id: string) => void;
+  removeFromCart: (id: string, size?: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
   totalItems: number;
@@ -77,8 +77,17 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     });
   };
 
-  const removeFromCart = (id: string) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  const removeFromCart = (id: string, size?: string) => {
+    setCart((prevCart) => 
+      prevCart.filter((item) => {
+        // If size is provided, only remove items with matching id AND size
+        if (size) {
+          return !(item.id === id && item.size === size);
+        }
+        // Otherwise, maintain backward compatibility and remove all with matching id
+        return item.id !== id;
+      })
+    );
   };
 
   const updateQuantity = (id: string, quantity: number) => {

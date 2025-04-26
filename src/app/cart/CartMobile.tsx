@@ -559,7 +559,7 @@ export const CartMobile = () => {
                               ).toFixed(2)}
                             </Typography>
                             <IconButton
-                              onClick={() => removeFromCart(variant.id)}
+                              onClick={() => removeFromCart(variant.id, variant.size)}
                               size="small"
                               sx={{ color: "red", p: 0.5 }}
                             >
