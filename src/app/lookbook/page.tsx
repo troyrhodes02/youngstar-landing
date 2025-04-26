@@ -1,13 +1,21 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Stack, CircularProgress, Box } from "@mui/material";
+import {
+  Stack,
+  CircularProgress,
+  Box,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import { NewspaperHeader } from "../../../components/sections/newspaper/header/NewspaperHeader";
 import { Navbar } from "../../../components/sections/navbar/Navbar";
 import { Section1 } from "../../../components/sections/newspaper/section1/Section1";
 import { Section2 } from "../../../components/sections/newspaper/section2/Section2";
 
 export default function Lookbook() {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -44,7 +52,8 @@ export default function Lookbook() {
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            paddingTop: { xs: "64px", sm: "80px" },
+            paddingTop: { xs: "60px", sm: "70px", md: "75px", lg: "80px" },
+            overflowX: "hidden",
           }}
         >
           <Box
@@ -63,6 +72,9 @@ export default function Lookbook() {
             sx={{
               position: "relative",
               zIndex: 2,
+              width: "100%",
+              maxWidth: "100vw",
+              overflow: "hidden",
             }}
           >
             <NewspaperHeader />

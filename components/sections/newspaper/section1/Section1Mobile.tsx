@@ -1,10 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { Typography, Box, Divider, Modal } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Divider,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section1Mobile = () => {
+  const theme = useTheme();
+  const isXsScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.between("sm", "md"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = () => {
@@ -23,7 +34,7 @@ export const Section1Mobile = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          padding: "20px 10px",
+          padding: { xs: "15px 8px", sm: "18px 10px", md: "20px 12px" },
         }}
       >
         {["Lifestyle", "Fashion", "Streetwear"].map((title, index) => (
@@ -33,7 +44,9 @@ export const Section1Mobile = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              marginBottom: index < 2 ? "16px" : "0",
+              marginBottom:
+                index < 2 ? { xs: "12px", sm: "14px", md: "16px" } : "0",
+              width: "100%",
             }}
           >
             <Typography
@@ -41,10 +54,10 @@ export const Section1Mobile = () => {
               align="center"
               sx={{
                 fontWeight: "bold",
-                fontSize: "1.5rem",
+                fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.6rem" },
                 color: "#333",
                 textTransform: "uppercase",
-                letterSpacing: "2px",
+                letterSpacing: { xs: "1px", sm: "1.5px", md: "2px" },
                 fontFamily: "'Times New Roman', Times, serif",
               }}
             >
@@ -55,10 +68,10 @@ export const Section1Mobile = () => {
                 orientation="horizontal"
                 flexItem
                 sx={{
-                  width: "100%",
+                  width: { xs: "85%", sm: "90%", md: "95%" },
                   borderColor: "#333",
-                  borderWidth: "1px",
-                  marginY: 1,
+                  borderWidth: { xs: "0.5px", sm: "0.75px", md: "1px" },
+                  marginY: { xs: 0.75, sm: 1, md: 1.25 },
                 }}
               />
             )}
@@ -71,19 +84,19 @@ export const Section1Mobile = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          padding: "20px",
+          padding: { xs: "15px 10px", sm: "18px 15px", md: "20px" },
         }}
       >
         <Box
           sx={{
-            padding: "0 10px",
-            marginBottom: "20px",
+            padding: { xs: "0 8px", sm: "0 10px", md: "0 15px" },
+            marginBottom: { xs: "15px", sm: "18px", md: "20px" },
             textAlign: "center",
           }}
         >
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: { xs: "1rem", sm: "1.1rem", md: "1.2rem" },
               lineHeight: 1.6,
               color: "#333",
             }}
@@ -105,7 +118,7 @@ export const Section1Mobile = () => {
             alignItems: "center",
             width: "100%",
             position: "relative",
-            maxWidth: "500px",
+            maxWidth: { xs: "300px", sm: "400px", md: "500px" },
             height: "auto",
             borderRadius: "10px",
             cursor: "pointer",
@@ -116,7 +129,7 @@ export const Section1Mobile = () => {
           }}
           onClick={handleImageClick}
         >
-          <Image
+          <OptimizedImage
             src="/newspaper1.jpeg"
             alt="Fashion and Streetwear"
             layout="responsive"
@@ -126,6 +139,7 @@ export const Section1Mobile = () => {
               borderRadius: "10px",
             }}
             priority
+            lazyLoad={false}
           />
         </Box>
       </Box>
@@ -137,9 +151,9 @@ export const Section1Mobile = () => {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "90%",
-            maxWidth: "800px",
-            maxHeight: "80%",
+            width: "95%",
+            maxWidth: { xs: "350px", sm: "550px", md: "650px" },
+            maxHeight: { xs: "80%", sm: "85%" },
             overflow: "hidden",
             backgroundColor: "#fff",
             outline: "none",
@@ -154,12 +168,13 @@ export const Section1Mobile = () => {
               height: "auto",
             }}
           >
-            <Image
+            <OptimizedImage
               src="/newspaper1.jpeg"
               alt="Fashion and Streetwear"
               layout="responsive"
               width={800}
               height={600}
+              lazyLoad={false}
             />
           </Box>
         </Box>

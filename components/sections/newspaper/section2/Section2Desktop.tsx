@@ -1,10 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { Typography, Box, Grid, Modal } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Grid,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section2Desktop = () => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState<string>("");
 
@@ -21,7 +32,7 @@ export const Section2Desktop = () => {
     <>
       <Box
         sx={{
-          padding: "60px 30px",
+          padding: { lg: "40px 20px", xl: "60px 30px" },
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -30,39 +41,39 @@ export const Section2Desktop = () => {
       >
         <Box
           sx={{
-            width: "90%",
+            width: { lg: "95%", xl: "90%" },
             height: "2px",
             backgroundColor: "#333",
-            marginBottom: "50px",
+            marginBottom: { lg: "40px", xl: "50px" },
           }}
         />
 
         <Grid
           container
           sx={{
-            maxWidth: "80%",
+            maxWidth: { lg: "90%", xl: "80%" },
             justifyContent: "space-between",
             alignItems: "stretch",
           }}
-          spacing={5}
+          spacing={{ lg: 3, xl: 5 }}
         >
           {[
             {
               image: "news3.jpg",
               text: "As it gained popularity, street fashion empowered communities to embrace bold, unique styles that reflect their experiences and backgrounds, breaking traditional fashion norms.",
-              imageHeight: 500,
+              imageHeight: { lg: 400, xl: 500 },
               textAboveImage: false,
             },
             {
               image: "news4.jpg",
               text: "Street fashion has had a profound influence on urban communities, acting as a powerful form of self-expression and cultural identity. Emerging and blending influences from music, art, and social movements, it became a way for individuals, especially youth, to showcase their personality, status, and creativity.",
-              imageHeight: 300,
+              imageHeight: { lg: 250, xl: 300 },
               textAboveImage: true,
             },
             {
               image: "news5.jpg",
               text: "With social media and digital platforms, people can freely share their styles, beliefs, and stories, shaping both personal and global culture. It empowers individuals to break norms and celebrate diversity. The world is ours.",
-              imageHeight: 300,
+              imageHeight: { lg: 250, xl: 300 },
               textAboveImage: false,
             },
           ].map((item, index) => (
@@ -79,12 +90,12 @@ export const Section2Desktop = () => {
                   <>
                     <Typography
                       sx={{
-                        fontSize: "1.8rem",
+                        fontSize: { lg: "1.5rem", xl: "1.8rem" },
                         fontWeight: "bold",
                         lineHeight: 1.5,
                         textAlign: "justify",
                         color: "#333",
-                        marginBottom: "20px",
+                        marginBottom: { lg: "15px", xl: "20px" },
                       }}
                     >
                       {item.text}
@@ -93,7 +104,7 @@ export const Section2Desktop = () => {
                       sx={{
                         position: "relative",
                         width: "100%",
-                        height: `${item.imageHeight}px`,
+                        height: item.imageHeight,
                         borderRadius: "10px",
                         cursor: "pointer",
                         transition: "transform 0.3s ease",
@@ -103,13 +114,14 @@ export const Section2Desktop = () => {
                       }}
                       onClick={() => handleImageClick(item.image)}
                     >
-                      <Image
+                      <OptimizedImage
                         src={`/${item.image}`}
                         alt={`Image ${index + 1}`}
                         layout="fill"
                         objectFit="cover"
                         style={{ borderRadius: "10px" }}
-                        priority
+                        priority={index === 0}
+                        lazyLoad={index !== 0}
                       />
                     </Box>
                   </>
@@ -119,9 +131,9 @@ export const Section2Desktop = () => {
                       sx={{
                         position: "relative",
                         width: "100%",
-                        height: `${item.imageHeight}px`,
+                        height: item.imageHeight,
                         borderRadius: "10px",
-                        marginBottom: "20px",
+                        marginBottom: { lg: "15px", xl: "20px" },
                         cursor: "pointer",
                         transition: "transform 0.3s ease",
                         "&:hover": {
@@ -130,18 +142,19 @@ export const Section2Desktop = () => {
                       }}
                       onClick={() => handleImageClick(item.image)}
                     >
-                      <Image
+                      <OptimizedImage
                         src={`/${item.image}`}
                         alt={`Image ${index + 1}`}
                         layout="fill"
                         objectFit="cover"
                         style={{ borderRadius: "10px" }}
-                        priority
+                        priority={index === 0}
+                        lazyLoad={index !== 0}
                       />
                     </Box>
                     <Typography
                       sx={{
-                        fontSize: "1.8rem",
+                        fontSize: { lg: "1.5rem", xl: "1.8rem" },
                         fontWeight: "bold",
                         lineHeight: 1.5,
                         textAlign: "justify",
@@ -166,7 +179,7 @@ export const Section2Desktop = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "90%",
-            maxWidth: "800px",
+            maxWidth: { lg: "700px", xl: "800px" },
             maxHeight: "80%",
             overflow: "hidden",
             backgroundColor: "#fff",
@@ -182,12 +195,13 @@ export const Section2Desktop = () => {
               height: "auto",
             }}
           >
-            <Image
+            <OptimizedImage
               src={`/${currentImage}`}
               alt="Full View"
               layout="responsive"
               width={800}
               height={600}
+              lazyLoad={false}
             />
           </Box>
         </Box>

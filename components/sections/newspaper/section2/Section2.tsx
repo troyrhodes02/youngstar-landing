@@ -6,7 +6,7 @@ import { Section2Mobile } from "./Section2Mobile";
 
 export const Section2 = () => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
-  return isDesktop ? <Section2Desktop /> : <Section2Mobile />;
+  return isMobile ? <Section2Mobile /> : <Section2Desktop />;
 };

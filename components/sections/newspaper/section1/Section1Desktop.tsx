@@ -1,10 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
-import { Typography, Box, Divider, Modal } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Divider,
+  Modal,
+  useTheme,
+  useMediaQuery,
+} from "@mui/material";
+import { OptimizedImage } from "../../../OptimizedImage";
 
 export const Section1Desktop = () => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between("lg", "xl"));
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleImageClick = () => {
@@ -21,15 +32,18 @@ export const Section1Desktop = () => {
         sx={{
           display: "flex",
           justifyContent: "center",
+          px: { lg: 2, xl: 4 },
         }}
       >
         <Box
           sx={{
-            marginTop: "20px",
+            marginTop: { lg: "15px", xl: "20px" },
             display: "flex",
             alignItems: "center",
-            height: "75px",
-            marginBottom: "50px",
+            height: { lg: "65px", xl: "75px" },
+            marginBottom: { lg: "40px", xl: "50px" },
+            flexWrap: "wrap",
+            justifyContent: "center",
           }}
         >
           {["Lifestyle", "Fashion", "Streetwear"].map((title, index) => (
@@ -39,11 +53,12 @@ export const Section1Desktop = () => {
                 align="center"
                 sx={{
                   fontWeight: "bold",
-                  fontSize: "4.5rem",
+                  fontSize: { lg: "3.5rem", xl: "4.5rem" },
                   color: "#333",
                   textTransform: "uppercase",
-                  letterSpacing: "10px",
+                  letterSpacing: { lg: "7px", xl: "10px" },
                   fontFamily: "'Times New Roman', Times, serif",
+                  px: 1,
                 }}
               >
                 {title}
@@ -53,10 +68,10 @@ export const Section1Desktop = () => {
                   orientation="vertical"
                   flexItem
                   sx={{
-                    height: "75px",
+                    height: { lg: "65px", xl: "75px" },
                     borderColor: "#333",
                     borderWidth: "2px",
-                    marginX: 2,
+                    marginX: { lg: 1.5, xl: 2 },
                   }}
                 />
               )}
@@ -69,20 +84,24 @@ export const Section1Desktop = () => {
         sx={{
           display: "flex",
           alignItems: "flex-start",
+          flexDirection: { lg: "row" },
+          px: { lg: 3, xl: 4 },
+          mb: { lg: 4, xl: 5 },
         }}
       >
         <Box
           sx={{
             flex: 1,
-            paddingLeft: "200px",
+            paddingLeft: { lg: "50px", xl: "200px" },
+            paddingRight: { lg: "20px", xl: "30px" },
           }}
         >
           <Typography
             sx={{
-              fontSize: "2.8rem",
+              fontSize: { lg: "2.2rem", xl: "2.8rem" },
               lineHeight: 1.8,
               color: "#333",
-              width: "950px",
+              width: { lg: "100%", xl: "950px" },
             }}
           >
             Creative youth are vital to the world as they bring fresh ideas,
@@ -98,12 +117,12 @@ export const Section1Desktop = () => {
         <Box
           sx={{
             flex: 1,
-            paddingLeft: "25px",
+            paddingLeft: { lg: "15px", xl: "25px" },
             justifyContent: "center",
             alignItems: "center",
             position: "relative",
             width: "100%",
-            height: "600px",
+            height: { lg: "500px", xl: "600px" },
             cursor: "pointer",
             transition: "transform 0.3s ease",
             "&:hover": {
@@ -112,12 +131,13 @@ export const Section1Desktop = () => {
           }}
           onClick={handleImageClick}
         >
-          <Image
+          <OptimizedImage
             src="/newspaper1.jpeg"
             alt="Fashion and Streetwear"
             layout="fill"
             objectFit="contain"
             priority
+            lazyLoad={false}
           />
         </Box>
       </Box>
@@ -130,7 +150,7 @@ export const Section1Desktop = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "90%",
-            maxWidth: "800px",
+            maxWidth: { lg: "700px", xl: "800px" },
             maxHeight: "80%",
             overflow: "hidden",
             backgroundColor: "#fff",
@@ -146,12 +166,13 @@ export const Section1Desktop = () => {
               height: "auto",
             }}
           >
-            <Image
+            <OptimizedImage
               src="/newspaper1.jpeg"
               alt="Fashion and Streetwear"
               layout="responsive"
               width={800}
               height={600}
+              lazyLoad={false}
             />
           </Box>
         </Box>

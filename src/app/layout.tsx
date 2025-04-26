@@ -2,6 +2,7 @@
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Bebas_Neue } from "next/font/google";
+import { CartProvider } from "../context/CartContext";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-bebas-neue",
@@ -35,7 +36,9 @@ export default function RootLayout({
           overflowX: "hidden",
         }}
       >
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <CartProvider>{children}</CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

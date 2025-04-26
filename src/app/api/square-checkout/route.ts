@@ -9,72 +9,78 @@ const client = new Client({
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { itemId, size, quantity } = body;
+    const { items, customer } = body;
 
-    const catalogResponse = await client.catalogApi.retrieveCatalogObject(
-      itemId,
-      true
-    );
+    console.log("Received checkout request:", { items, customer });
 
-    if (
-      !catalogResponse.result.object ||
-      catalogResponse.result.object.type !== "ITEM_VARIATION"
-    ) {
-      throw new Error("Item variation not found or is not a valid type.");
+    if (!items || !items.length) {
+      throw new Error("No items provided for checkout");
     }
 
-    const itemVariation = catalogResponse.result.object;
-    const itemVariationName =
-      itemVariation.itemVariationData?.name || "Variation";
-    const itemPrice = itemVariation.itemVariationData?.priceMoney?.amount;
+    // Create a Square order with line items
+    const locationId = process.env.SQUARE_LOCATION_ID!;
+    const idempotencyKey = Date.now().toString();
 
-    if (!itemVariationName || !itemPrice) {
-      throw new Error("Item variation details are missing.");
-    }
-
-    const parentItemId = itemVariation.itemVariationData?.itemId;
-    let parentItemName = "Product";
-    if (parentItemId) {
-      const parentItemResponse = await client.catalogApi.retrieveCatalogObject(
-        parentItemId,
-        true
-      );
-      parentItemName =
-        parentItemResponse.result.object?.itemData?.name || parentItemName;
-    }
-
-    const fullItemName = `${parentItemName} - ${itemVariationName} - Size: ${size}`;
-
-    const checkoutResponse = await client.checkoutApi.createPaymentLink({
-      idempotencyKey: Date.now().toString(),
-      quickPay: {
-        name: fullItemName,
-        priceMoney: {
-          amount: BigInt(itemPrice) * BigInt(quantity),
-          currency: "USD",
-        },
-        locationId: process.env.SQUARE_LOCATION_ID!,
+    // Create checkout link with line items
+    const response = await client.checkoutApi.createPaymentLink({
+      idempotencyKey,
+      order: {
+        locationId,
+        lineItems: items.map(
+          (item: { catalogObjectId: string; quantity: string }) => ({
+            catalogObjectId: item.catalogObjectId,
+            quantity: item.quantity,
+          }),
+        ),
+        // Add customer details if provided
+        ...(customer && {
+          fulfillments: [
+            {
+              type: "SHIPMENT",
+              shipmentDetails: {
+                recipient: {
+                  displayName: `${customer.givenName} ${customer.familyName}`,
+                  emailAddress: customer.email || undefined,
+                  phoneNumber: customer.phone || undefined,
+                  address: {
+                    addressLine1: customer.address.addressLine1,
+                    locality: customer.address.locality,
+                    administrativeDistrictLevel1:
+                      customer.address.administrativeDistrictLevel1,
+                    postalCode: customer.address.postalCode,
+                    country: customer.address.country,
+                  },
+                },
+              },
+            },
+          ],
+        }),
       },
       checkoutOptions: {
-        askForShippingAddress: true,
+        askForShippingAddress: !customer,
+        merchantSupportEmail: "support@youngstarpresence.com",
       },
     });
 
-    if (
-      !checkoutResponse.result.paymentLink ||
-      !checkoutResponse.result.paymentLink.url
-    ) {
+    if (!response.result.paymentLink || !response.result.paymentLink.url) {
       throw new Error("Payment link could not be created.");
     }
 
+    console.log("Checkout URL created:", response.result.paymentLink.url);
+
     return NextResponse.json({
-      checkoutUrl: checkoutResponse.result.paymentLink.url,
+      checkoutUrl: response.result.paymentLink.url,
     });
   } catch (error) {
     console.error("Square Checkout Error:", error);
     return NextResponse.json(
-      { error: "Failed to create checkout link" },
-      { status: 500 }
+      {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Failed to create checkout link",
+      },
+      { status: 500 },
     );
   }
 }

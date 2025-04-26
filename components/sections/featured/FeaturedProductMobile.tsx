@@ -1,10 +1,23 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Box, Typography, Button, styled, TextField, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  styled,
+  TextField,
+  IconButton,
+  useTheme,
+  useMediaQuery,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import axios from "axios";
+import { useCart } from "../../../src/context/CartContext";
+import { useRouter } from "next/navigation";
 
 type SizeKey = "SM" | "MD" | "LG" | "XL";
 
@@ -37,7 +50,7 @@ const StyledButton = styled(
   },
 }));
 
-const BuyNowButton = styled(
+const ActionButton = styled(
   ({
     isActive,
     ...props
@@ -61,17 +74,27 @@ const BuyNowButton = styled(
 }));
 
 export const FeaturedProductMobile: React.FC = () => {
+  const theme = useTheme();
+  const isXsScreen = useMediaQuery("(max-width:400px)");
+
   const [productImages, setProductImages] = useState<string[]>([]);
   const [productPrice, setProductPrice] = useState<number | null>(null);
   const [productName, setProductName] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<SizeKey | null>(null);
   const [quantity, setQuantity] = useState(1);
+  const [productId, setProductId] = useState<string>(
+    "4XCQCJ6IZOHFRVDH5ZNHMIUQ",
+  );
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const router = useRouter();
+  const { addItem } = useCart();
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
         const response = await axios.post("/api/square-product-details", {
-          itemId: "4XCQCJ6IZOHFRVDH5ZNHMIUQ",
+          itemId: productId,
         });
 
         const { images, price, name } = response.data;
@@ -85,30 +108,56 @@ export const FeaturedProductMobile: React.FC = () => {
     };
 
     fetchProductDetails();
-  }, []);
+  }, [productId]);
 
-  const handleBuyNow = async () => {
+  const handleAddToCart = () => {
     if (!selectedSize) {
       alert("Please select a size.");
       return;
     }
 
-    try {
-      const { data } = await axios.post("/api/square-checkout", {
-        itemId: sizeVariations[selectedSize],
-        size: selectedSize,
-        quantity,
-      });
+    const cartItem = {
+      id: productId,
+      name: productName,
+      price: productPrice ?? 0,
+      size: selectedSize,
+      quantity: quantity,
+      image: productImages[0] || "",
+      variationId: sizeVariations[selectedSize],
+    };
 
-      if (data.checkoutUrl) {
-        window.location.href = data.checkoutUrl;
-      } else {
-        alert("Failed to create checkout link.");
-      }
-    } catch (error) {
-      console.error("Error creating checkout link:", error);
-      alert("An error occurred while processing your request.");
+    addItem(cartItem);
+    setSnackbarOpen(true);
+  };
+
+  const handleBuyNow = () => {
+    if (!selectedSize) {
+      alert("Please select a size.");
+      return;
     }
+
+    const cartItem = {
+      id: productId,
+      name: productName,
+      price: productPrice ?? 0,
+      size: selectedSize,
+      quantity: quantity,
+      image: productImages[0] || "",
+      variationId: sizeVariations[selectedSize],
+    };
+
+    addItem(cartItem);
+    router.push("/cart");
+  };
+
+  const handleCloseSnackbar = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string,
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
   };
 
   const adjustedPrice = productPrice ? (productPrice * quantity) / 100 : 0;
@@ -122,7 +171,8 @@ export const FeaturedProductMobile: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingY: "50px",
+        paddingY: "30px",
+        paddingX: "15px",
         width: "100%",
         height: "100%",
         overflow: "hidden",
@@ -132,9 +182,10 @@ export const FeaturedProductMobile: React.FC = () => {
       <Typography
         gutterBottom
         sx={{
-          fontSize: "2rem",
+          fontSize: { xs: "1.5rem", sm: "2rem" },
           letterSpacing: "1px",
-          marginBottom: "20px",
+          marginBottom: "15px",
+          textAlign: "center",
         }}
       >
         Featured Product
@@ -146,7 +197,13 @@ export const FeaturedProductMobile: React.FC = () => {
           overflowX: "auto",
           gap: 2,
           width: "100%",
-          maxWidth: "360px",
+          maxWidth: { xs: "280px", sm: "360px" },
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": {
+            display: "none",
+          },
+          pb: 1, // Add padding to bottom to ensure shadow is visible
         }}
       >
         {productImages.map((image, index) => (
@@ -154,8 +211,8 @@ export const FeaturedProductMobile: React.FC = () => {
             key={index}
             sx={{
               flex: "0 0 auto",
-              width: "300px",
-              height: "400px",
+              width: { xs: "250px", sm: "300px" },
+              height: { xs: "330px", sm: "400px" },
               borderRadius: "8px",
               overflow: "hidden",
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
@@ -178,8 +235,10 @@ export const FeaturedProductMobile: React.FC = () => {
       <Typography
         sx={{
           marginTop: "20px",
-          fontSize: "1.5rem",
+          fontSize: { xs: "1.2rem", sm: "1.5rem" },
           letterSpacing: "1.5px",
+          textAlign: "center",
+          px: 2,
         }}
       >
         {productName || "Loading Product..."}
@@ -190,12 +249,12 @@ export const FeaturedProductMobile: React.FC = () => {
           flexDirection: "column",
           alignItems: "center",
           gap: 1,
-          marginTop: "20px",
+          marginTop: "15px",
         }}
       >
         <Typography
           sx={{
-            fontSize: "1.5rem",
+            fontSize: { xs: "1.2rem", sm: "1.5rem" },
             fontWeight: "bold",
           }}
         >
@@ -205,54 +264,119 @@ export const FeaturedProductMobile: React.FC = () => {
           sx={{
             display: "flex",
             alignItems: "center",
-            gap: "10px",
+            gap: { xs: "5px", sm: "10px" },
           }}
         >
           <Typography
             sx={{
-              fontSize: "1.5rem",
+              fontSize: { xs: "1.2rem", sm: "1.5rem" },
               fontWeight: "bold",
-              marginRight: "10px",
+              marginRight: { xs: "5px", sm: "10px" },
             }}
           >
             ${adjustedPrice.toFixed(2)}
           </Typography>
-          <IconButton onClick={decrementQuantity}>
-            <RemoveIcon />
+          <IconButton
+            onClick={decrementQuantity}
+            size={isXsScreen ? "small" : "medium"}
+          >
+            <RemoveIcon fontSize={isXsScreen ? "small" : "medium"} />
           </IconButton>
           <Typography
             sx={{
-              fontSize: "1.5rem",
+              fontSize: { xs: "1.2rem", sm: "1.5rem" },
               fontWeight: "bold",
             }}
           >
             {quantity}
           </Typography>
-          <IconButton onClick={incrementQuantity}>
-            <AddIcon />
+          <IconButton
+            onClick={incrementQuantity}
+            size={isXsScreen ? "small" : "medium"}
+          >
+            <AddIcon fontSize={isXsScreen ? "small" : "medium"} />
           </IconButton>
         </Box>
       </Box>
 
-      <Box sx={{ display: "flex", gap: "10px", marginY: "20px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          gap: { xs: "5px", sm: "10px" },
+          marginY: { xs: "15px", sm: "20px" },
+        }}
+      >
         {Object.keys(sizeVariations).map((size) => (
           <StyledButton
             key={size}
             isSelected={selectedSize === size}
             onClick={() => setSelectedSize(size as SizeKey)}
+            sx={{
+              fontSize: { xs: "0.8rem", sm: "1rem" },
+              padding: { xs: "6px 12px", sm: "8px 16px" },
+            }}
           >
             {size}
           </StyledButton>
         ))}
       </Box>
 
-      <BuyNowButton
-        isActive={!!selectedSize}
-        onClick={handleBuyNow}
-        disabled={!selectedSize}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: { xs: "10px", sm: "15px" },
+          width: "100%",
+          justifyContent: "center",
+        }}
       >
-        Buy Now
-      </BuyNowButton>
+        <ActionButton
+          isActive={!!selectedSize}
+          onClick={handleAddToCart}
+          fullWidth
+          sx={{
+            width: { xs: "90%", sm: "auto" },
+            maxWidth: { xs: "300px", sm: "none" },
+            fontSize: { xs: "1rem", sm: "1.2rem" },
+            marginTop: { xs: "10px", sm: "15px" },
+          }}
+        >
+          Add to Cart
+        </ActionButton>
+
+        <ActionButton
+          isActive={false}
+          onClick={handleBuyNow}
+          disabled={!selectedSize}
+          fullWidth
+          sx={{
+            width: { xs: "90%", sm: "auto" },
+            maxWidth: { xs: "300px", sm: "none" },
+            fontSize: { xs: "1rem", sm: "1.2rem" },
+            marginTop: { xs: "10px", sm: "15px" },
+            backgroundColor: "white",
+            color: "#000",
+          }}
+        >
+          Buy Now
+        </ActionButton>
+      </Box>
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Item added to cart!
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };

@@ -1,15 +1,19 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { AppBar, Toolbar, Typography, Box } from "@mui/material";
+import { AppBar, Toolbar, Typography, Box, Stack } from "@mui/material";
 import Link from "next/link";
+import { CartIcon } from "../../cart/CartIcon";
+import { FaLock } from "react-icons/fa";
 
 interface NavbarDesktopProps {
   alwaysWhite?: boolean;
+  showSecureBanner?: boolean;
 }
 
 export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
   alwaysWhite = false,
+  showSecureBanner = false,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -31,6 +35,7 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
     alwaysWhite || isScrolled ? "white" : "transparent";
   const navbarTextColor = alwaysWhite || isScrolled ? "black" : "white";
   const starColor = alwaysWhite || isScrolled ? "red" : "white";
+  const appBarHeight = showSecureBanner ? "130px" : "100px";
 
   return (
     <AppBar
@@ -38,11 +43,11 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
       elevation={0}
       sx={{
         backgroundColor: navbarBackgroundColor,
-        transition: "background-color 0.3s ease",
+        transition: "background-color 0.3s ease, height 0.3s ease",
         boxShadow:
           alwaysWhite || isScrolled ? "0px 4px 6px rgba(0, 0, 0, 0.1)" : "none",
         color: navbarTextColor,
-        height: "100px",
+        height: appBarHeight,
       }}
     >
       <Toolbar
@@ -51,7 +56,7 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
           justifyContent: "space-between",
           alignItems: "center",
           padding: "0 40px",
-          height: "100%",
+          height: "100px",
         }}
       >
         <Box sx={{ flex: 1 }} />
@@ -69,7 +74,8 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
               width: "25px",
               height: "25px",
               backgroundColor: starColor,
-              clipPath: "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
+              clipPath:
+                "polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)",
               transition: "background-color 0.3s ease",
               marginRight: "15px",
               display: "inline-block",
@@ -130,8 +136,43 @@ export const NavbarDesktop: React.FC<NavbarDesktopProps> = ({
               Lookbook
             </Typography>
           </Link>
+          <CartIcon color={navbarTextColor} />
         </Box>
       </Toolbar>
+      {showSecureBanner && (
+        <Box
+          sx={{
+            width: "100%",
+            bgcolor: "red",
+            py: 1,
+            textAlign: "center",
+            position: "absolute",
+            bottom: 0,
+            left: 0,
+            right: 0,
+          }}
+        >
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="center"
+            spacing={1}
+          >
+            <FaLock size={14} color="white" />
+            <Typography
+              variant="body2"
+              sx={{
+                fontWeight: "bold",
+                color: "white",
+                textTransform: "uppercase",
+                letterSpacing: 1,
+              }}
+            >
+              Secure Checkout
+            </Typography>
+          </Stack>
+        </Box>
+      )}
     </AppBar>
   );
 };
