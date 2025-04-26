@@ -171,12 +171,11 @@ export const FeaturedProductMobile: React.FC = () => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        paddingY: "30px",
-        paddingX: "15px",
         width: "100%",
-        height: "100%",
+        padding: { xs: "10px 0", sm: "20px 0" },
+        boxSizing: "border-box",
         overflow: "hidden",
-        position: "relative",
+        maxWidth: "100vw",
       }}
     >
       <Typography
@@ -329,7 +328,10 @@ export const FeaturedProductMobile: React.FC = () => {
           flexDirection: { xs: "column", sm: "row" },
           gap: { xs: "10px", sm: "15px" },
           width: "100%",
+          alignItems: "center",
           justifyContent: "center",
+          padding: { xs: "0 10px", sm: "0" },
+          boxSizing: "border-box",
         }}
       >
         <ActionButton
@@ -337,8 +339,8 @@ export const FeaturedProductMobile: React.FC = () => {
           onClick={handleAddToCart}
           fullWidth
           sx={{
-            width: { xs: "90%", sm: "auto" },
-            maxWidth: { xs: "300px", sm: "none" },
+            width: { xs: "100%", sm: "auto" },
+            maxWidth: { xs: "280px", sm: "none" },
             fontSize: { xs: "1rem", sm: "1.2rem" },
             marginTop: { xs: "10px", sm: "15px" },
           }}
@@ -352,8 +354,8 @@ export const FeaturedProductMobile: React.FC = () => {
           disabled={!selectedSize}
           fullWidth
           sx={{
-            width: { xs: "90%", sm: "auto" },
-            maxWidth: { xs: "300px", sm: "none" },
+            width: { xs: "100%", sm: "auto" },
+            maxWidth: { xs: "280px", sm: "none" },
             fontSize: { xs: "1rem", sm: "1.2rem" },
             marginTop: { xs: "10px", sm: "15px" },
             backgroundColor: "white",
