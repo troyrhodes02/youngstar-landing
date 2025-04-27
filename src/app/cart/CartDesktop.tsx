@@ -419,6 +419,7 @@ export const CartDesktop = () => {
                                       updateQuantity(
                                         variant.id,
                                         Math.max(1, variant.quantity - 1),
+                                        variant.size
                                       )
                                     }
                                     size="small"
@@ -446,6 +447,7 @@ export const CartDesktop = () => {
                                       updateQuantity(
                                         variant.id,
                                         variant.quantity + 1,
+                                        variant.size
                                       )
                                     }
                                     size="small"

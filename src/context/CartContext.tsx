@@ -17,7 +17,7 @@ interface CartContextType {
   addToCart: (item: CartItem) => void;
   addItem: (item: CartItem) => void;
   removeFromCart: (id: string, size?: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
+  updateQuantity: (id: string, quantity: number, size?: string) => void;
   clearCart: () => void;
   totalItems: number;
   totalPrice: number;
@@ -90,9 +90,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
+  const updateQuantity = (id: string, quantity: number, size?: string) => {
     setCart((prevCart) =>
-      prevCart.map((item) => (item.id === id ? { ...item, quantity } : item)),
+      prevCart.map((item) => {
+        // If size is provided, only update items with matching id AND size
+        if (size) {
+          return (item.id === id && item.size === size) ? { ...item, quantity } : item;
+        }
+        // Otherwise, maintain backward compatibility and update all with matching id
+        return item.id === id ? { ...item, quantity } : item;
+      }),
     );
   };
 
